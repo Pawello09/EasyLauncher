@@ -3,6 +3,7 @@ package com.github.droidworksstudio.fuzzywuzzy
 import com.github.droidworksstudio.launcher.data.entities.AppInfo
 import java.text.Normalizer
 import java.util.*
+import android.util.Log
 
 object FuzzyFinder {
     fun scoreApp(app: AppInfo, searchChars: String, topScore: Int): Int {
@@ -36,6 +37,7 @@ object FuzzyFinder {
         val n = s2.length
         var matchCount = 0
         var s1Index = 0
+        var oneFail = false
 
         // Iterate over each character in s2 and check if it exists in s1
         for (c2 in s2) {
@@ -53,7 +55,12 @@ object FuzzyFinder {
 
             // If the current character in s2 is not found in s1, return a score of 0
             if (!found) {
-                return 0f
+                if (oneFail) {
+                    return 0f
+                } else {
+                    oneFail = true
+                    matchCount--
+                }
             }
 
             // Increment the match count
@@ -61,6 +68,6 @@ object FuzzyFinder {
         }
 
         // Calculate the score as the ratio of matched characters to the longer string length
-        return matchCount.toFloat() / maxOf(m, n)
+        return matchCount.toFloat() / n
     }
 }
