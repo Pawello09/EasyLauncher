@@ -3,7 +3,6 @@ package com.github.droidworksstudio.fuzzywuzzy
 import com.github.droidworksstudio.launcher.data.entities.AppInfo
 import java.text.Normalizer
 import java.util.*
-import android.util.Log
 
 object FuzzyFinder {
     fun scoreApp(app: AppInfo, searchChars: String, topScore: Int): Int {
